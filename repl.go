@@ -14,6 +14,8 @@ func cleanInput(text string) []string {
 func startRepl() {
 
 	scanner := bufio.NewScanner(os.Stdin)
+	var con config
+	con.Next = "https://pokeapi.co/api/v2/location-area/"
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -27,7 +29,7 @@ func startRepl() {
 		commandsMap := getCommands()
 		command, ok := commandsMap[userCommand]
 		if ok {
-			var con config
+//			var con config
 			err := command.callback(&con)
 			if err != nil {
 				fmt.Println(err)
@@ -61,6 +63,16 @@ func getCommands() map[string]cliCommand {
 		name: "help",
 		description: "Displays a help message",
 		callback: commandHelp,
+	},
+    	"map": {
+		name: "map",
+		description: "Displays a list of locations",
+		callback: commandMap,
+	},
+	"mapb": {
+		name: "mapb",
+		description: "Displays a list of locations from the previous page",
+		callback: commandMapb,
 	},
 	}
 }

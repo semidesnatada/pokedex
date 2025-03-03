@@ -1,19 +1,24 @@
 package main
 
-//import (
-//	"fmt"
-//)
+import (
+	"time"
+
+	"github.com/semidesnatada/pokedex/internal/pokeapi"
+	"github.com/semidesnatada/pokedex/internal/pokecache"
+)
 
 
 func main() {
-//	x := "Buongiorno amici, Hello, World! It's your grandad."
-//	x = "  "
-//	fmt.Println(x)
-//	y := cleanInput(x)
-//	for _, section := range y{
-//		fmt.Println(section)
-//	}
 
-	startRepl()
+	client := pokeapi.NewClient(5 * time.Second)
+	cache := pokecache.NewCache(7 * time.Second)
+	pokedex := pokecache.NewPokedex()
+	con := config{
+		PokeClient: client,
+		Pokedex: pokedex,
+		Cache: cache,
+	}
+
+	startRepl(&con)
 
 }
